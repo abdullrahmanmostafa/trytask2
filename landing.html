@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاري التوجيه...</title>
+    <title>جارٍ التحميل...</title>
     <script>
         window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const realLink = urlParams.get('realLink');
+            var params = new URLSearchParams(window.location.search);
+            var realLink = params.get("realLink");
 
             if (realLink) {
                 window.location.href = realLink;
             } else {
-                document.body.innerHTML = "<h2>حدث خطأ! لم يتم العثور على الرابط.</h2>";
+                document.body.innerHTML = "<h2>خطأ: الرابط غير موجود</h2>";
             }
         };
     </script>
 </head>
 <body>
-    <h2>جارٍ التوجيه...</h2>
+    <h2>جارٍ إعادة التوجيه...</h2>
 </body>
 </html>

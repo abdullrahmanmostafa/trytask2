@@ -3,25 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جارٍ التوجيه...</title>
-    <script>
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const realLink = urlParams.get('realLink');
-            const fakeLink = urlParams.get('fakeLink');
-
-            if (realLink) {
-                var repoName = "/trytask2";  
-                var landingURL = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink);
-
-                window.location.href = landingURL;
-            } else {
-                document.body.innerHTML = "<h2>حدث خطأ! لم يتم العثور على الرابط.</h2>";
-            }
-        };
-    </script>
+    <title>جاري التحويل...</title>
 </head>
 <body>
-    <h2>جارٍ التوجيه...</h2>
+
+    <h2 dir="rtl">جاري التحويل...</h2>
+    <p dir="rtl">إذا لم يتم تحويلك تلقائيًا، اضغط على الرابط أدناه:</p>
+
+    <a id="realLink" href="#" style="color: blue; text-decoration: underline; cursor: pointer;"></a>
+
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var realLink = urlParams.get('realLink');
+
+        if (realLink) {
+            realLink = decodeURIComponent(realLink);
+
+            var realLinkElement = document.getElementById('realLink');
+            realLinkElement.innerText = realLink;
+            realLinkElement.href = realLink;
+
+            setTimeout(function() {
+                window.location.href = realLink;
+            }, 2000);
+        } else {
+            document.body.innerHTML = "<h2 dir='rtl'>خطأ: لم يتم العثور على الرابط الحقيقي!</h2>";
+        }
+    </script>
+
 </body>
 </html>

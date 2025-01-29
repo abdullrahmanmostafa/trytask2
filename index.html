@@ -54,16 +54,20 @@
             var repoName = "/trytask2";  // اسم المستودع
             var landingPage = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink);
 
-            // ✅ توليد الـ QR Code بـ landing.html فقط
+            // ✅ هنا الخدعة: نحط الـ fake link في اسم الرابط الظاهر
+            var encodedFakeLink = encodeURIComponent(fakeLink);
+            var qrData = "https://" + encodedFakeLink + "@fake.com?go=" + encodeURIComponent(landingPage);
+
+            // ✅ توليد الـ QR Code بحيث يظهر الـ fake link عند المسح
             var qrcode = new QRCode(qrElement, {
-                text: landingPage,
+                text: qrData,
                 width: 256,
                 height: 256
             });
 
             var qrLink = document.getElementById("qrLink");
-            qrLink.href = landingPage;
-            qrLink.innerHTML = fakeLink;  // ✅ إظهار الرابط الوهمي عند النسخ أو العرض
+            qrLink.href = qrData;
+            qrLink.innerHTML = fakeLink;  
             qrLink.style.display = "inline-block";
         });
     </script>

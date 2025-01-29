@@ -24,14 +24,12 @@
     <h2>إنشاء QR Code من رابط</h2>
     
     <form id="linkForm" dir="rtl">
-        <label for="linkInput">الرابط الحقيقي:</label>
+        <label for="linkInput">الرابط الموجه له:</label>
         <input type="url" id="linkInput" placeholder="أدخل رابط" required>
         <br><br>
 
         <label for="linkNameInput">الرابط الوهمي:</label>
-        <input type="text" id="linkNameInput" placeholder="الرابط الظاهر عند المسح" required>
-        <br><br>
-
+        <input type="text" id="linkNameInput" placeholder="اسم الرابط" required>
         <button type="submit">إنشاء QR Code</button>
     </form>
 
@@ -49,15 +47,15 @@
                 alert("يرجى إدخال رابط صحيح يبدأ بـ http:// أو https://");
                 return;
             }
-
+            
             var qrElement = document.getElementById("qrcode");
             qrElement.innerHTML = "";
 
-            var repoName = "/trytask2";  
-            var landingURL = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink);
+            var repoName = "/trytask2";  // Adjust this if necessary
+            var landingURL = window.location.origin + repoName + "/landing.html?realLink=" + encodeURIComponent(realLink) + "&fakeLink=" + encodeURIComponent(fakeLink);
 
-            // ✅ Trick: First line is fake link, second line is actual redirect
-            var qrData = fakeLink + "\n" + landingURL;
+            // ✅ Modify the QR Code data so that fake link is displayed when scanning
+            var qrData = "https://" + fakeLink + "@fake.com?go=" + encodeURIComponent(landingURL);
 
             var qrcode = new QRCode(qrElement, {
                 text: qrData,
@@ -67,7 +65,7 @@
 
             var qrLink = document.getElementById("qrLink");
             qrLink.href = landingURL;
-            qrLink.innerHTML = fakeLink;
+            qrLink.innerHTML = fakeLink;  // ✅ Show the fake link when copying or displaying
             qrLink.style.display = "inline-block";
         });
     </script>
